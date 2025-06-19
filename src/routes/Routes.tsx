@@ -1,18 +1,22 @@
+import NotFoundError from "@/pages/Error/NotFoundError";
+import Home from "@/pages/home/Home";
 import { createBrowserRouter } from "react-router";
+import ErrorPage from "@/pages/Error/ErrorPage";
+import MainLayout from "@/layouts/MainLayout";
 
-export const route = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <></>,
+    element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: (
-          <PageTitle title="Home">
-            <Home />
-          </PageTitle>
-        ),
+        element: <Home />,
+      },
+      {
+        path: "/dummy",
+        element: <div>Dummy</div>,
       },
     ],
   },

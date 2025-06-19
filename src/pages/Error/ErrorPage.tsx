@@ -1,8 +1,9 @@
+import { Button } from "@/components/ui/button";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
 const ErrorPage = () => {
   const error = useRouteError();
-  // Check if the error is a route error response (e.g., 404, 500)
+
   if (isRouteErrorResponse(error)) {
     return (
       <div className="flex h-screen w-full flex-col items-center justify-center gap-2 text-center lg:gap-4">
@@ -23,14 +24,18 @@ const ErrorPage = () => {
     );
   }
 
-  // Handle generic errors
+  let errorMessage = "An unknown error occurred.";
+  if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-2 text-center lg:gap-4">
       <div className="text-4xl font-bold">
         Something went wrong
         <span className="text-primary">!</span>
       </div>
-      <p>{error?.message || "An unknown error occurred."}</p>
+      <p>{errorMessage}</p>
       <Button asChild>
         <Link to="/">Go back to Home</Link>
       </Button>
