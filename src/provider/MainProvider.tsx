@@ -1,22 +1,32 @@
+import { StateContextProvider } from "@/context/StateContext";
+import useSyncLocalProject from "@/hooks/useSyncLocalProject";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
+  useSyncLocalProject("demo-project-name");
+  const queryClient = new QueryClient();
+
   return (
     <>
-      {/* <Provider store={store}>  // Redux store provider
-      <QueryClientProvider client={queryClient}>  // React Query provider
-        <AuthContextProvider>
-          <StateContextProvider>
-            <HelmetProvider>  // React Helmet Async provider for managing document head */}
-      {children}
-      {/* <Toaster position="top-right" reverseOrder={false} /> // React Hot Toast for notifications
-            </HelmetProvider>
-          </StateContextProvider>
-        </AuthContextProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+      <QueryClientProvider client={queryClient}>
+        <StateContextProvider>{children}</StateContextProvider>
       </QueryClientProvider>
-    </Provider> */}
     </>
+
+    // <Provider store={store}> // Redux store provider
+    //   <QueryClientProvider client={queryClient}> // React Query provider
+    //     <AuthContextProvider>
+    //       <StateContextProvider>
+    //         <HelmetProvider> // React Helmet Async provider for managing document head
+    //           {children}
+    //           <Toaster position="top-right" reverseOrder={false} /> // React Hot Toast for notifications
+    //         </HelmetProvider>
+    //       </StateContextProvider>
+    //     </AuthContextProvider>
+    //     <ReactQueryDevtools initialIsOpen={false} />
+    //   </QueryClientProvider>
+    // </Provider>
   );
 };
 

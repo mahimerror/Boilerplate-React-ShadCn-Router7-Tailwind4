@@ -1,26 +1,38 @@
-// import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
+interface StateContextType {
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  isSmall: boolean;
+  setIsSmall: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-// const StateContext = createContext(null);
+const StateContext = createContext<StateContextType | null>(null);
 
-// const StateContextProvider = ({ children }: { children: ReactNode }) => {
-//   const [questionnariesData, setQuestionnariesData] = useState();
-//   const [nameOfSubCategory, setNameOfSubCategory] = useState("");
-//   const [location, setLocation] = useState(null);
+const StateContextProvider = ({ children }: { children: ReactNode }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isSmall, setIsSmall] = useState(false);
 
-//   return (
-//     <StateContext.Provider
-//       value={{
-//         questionnariesData,
-//         setQuestionnariesData,
-//         location,
-//         setLocation,
-//         nameOfSubCategory,
-//         setNameOfSubCategory,
-//       }}
-//     >
-//       {children}
-//     </StateContext.Provider>
-//   );
-// };
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmall(window.innerWidth < 768 ? true : false);
+    };
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
-// export { StateContextProvider, StateContext };
+  return (
+    <StateContext.Provider
+      value={{
+        currentStep,
+        setCurrentStep,
+        isSmall,
+        setIsSmall,
+      }}
+    >
+      {children}
+    </StateContext.Provider>
+  );
+};
+
+export { StateContextProvider, StateContext };
