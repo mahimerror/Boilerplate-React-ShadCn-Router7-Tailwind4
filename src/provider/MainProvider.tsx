@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
 const MainProvider = ({ children }: { children: ReactNode }) => {
-  useSyncLocalProject("demo-project-name");
+  useSyncLocalProject("demo-project-name"); // Please replace with your actual project name
   const queryClient = new QueryClient();
 
   return (
